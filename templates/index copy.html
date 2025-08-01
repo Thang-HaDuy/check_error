@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="/static/lib/semantic.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/lib/flatpickr.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/style.css" />
+        <script src="/static/lib/jquery.min.js"></script>
+        <script src="/static/lib/semantic.min.js"></script>
+        <script src="/static/lib/flatpickr.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+        <style>
+            .ui {
+                font-family: 'Roboto', sans-serif !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="tcyclone ui grid full-height">
+            <div class="row">
+                <div class="sixteen wide column">
+                    <div class="tcyclone-header ui segment">
+                        <div class="ui grid center aligned">
+                            <div class="six wide column right aligned tcyclone-d-flex tcyclone-align-items-center">
+                                <div
+                                    class="tcyclone-map-v1-dropdown-search ui search selection dropdown tcyclone-w-100"
+                                >
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">V1</div>
+                                    <div class="menu"></div>
+                                </div>
+                            </div>
+                            <div class="four wide column center aligned tcyclone-d-flex tcyclone-gap-10">
+                                <div>
+                                    <div
+                                        class="tcyclone-type-dropdown-search ui search selection dropdown"
+                                        data-value="1"
+                                    >
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Hố ga</div>
+                                        <!-- Hoặc bạn có thể dùng <div class="text">Hố ga</div> -->
+                                        <div class="menu">
+                                            <div class="item active selected" data-value="1">Hố ga</div>
+                                            <div class="item" data-value="2">Kè</div>
+                                        </div>
+                                    </div>
+                                    <button class="tcyclone-btn-check ui primary button">Kiểm tra</button>
+                                </div>
+                            </div>
+                            <div class="six wide column left aligned tcyclone-d-flex tcyclone-align-items-center">
+                                <div
+                                    class="tcyclone-map-v3-dropdown-search multiple ui search selection dropdown tcyclone-flex-1"
+                                >
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">V3</div>
+                                    <div class="menu"></div>
+                                </div>
+                                <i class="tcyclone-map-v3-clear times icon tcyclone-ms-5 tcyclone-pointer"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row tcyclone-flex-1">
+                <div class="ui container segment">
+                    <div class="tcyclone-message tcyclone-d-flex tcyclone-flex-column sixteen wide column">
+                        <div class="sixteen wide column">
+                            <div class="tcyclone-d-flex">
+                                <h1 class="ui header tcyclone-message-Noti tcyclone-w-50">Thông tin</h1>
+                                <div class="tcyclone-w-50 tcyclone-text-right">
+                                    <h5 class="ui header tcyclone-total-manhole"></h5>
+                                    <!-- <div class="ui input">
+                                        <input type="text" placeholder="Tên mặt cắt" />
+                                    </div>
+                                    <button class="ui primary button">Cập nhật</button> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tcyclone-verified-info sixteen wide column">
+                            <div class="tcyclone-verified-info-column ui segment tcyclone-h-100">
+                                <div
+                                    class="tcyclone-d-flex tcyclone-flex-wrap tcyclone-scrollbar tcyclone-verified-info-content"
+                                >
+                                    <!-- <div class="tcyclone-w-100 tcyclone-d-flex">
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tcyclone-w-100 tcyclone-d-flex">
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tcyclone-w-100 tcyclone-d-flex">
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tcyclone-w-50">
+                                            <div class="tcyclone-p-10">
+                                                <ul class="tcyclone-info-list ui segment">
+                                                    <li>
+                                                        <span class="tcyclone-label"></span
+                                                        ><span class="value tcyclone-text-right"
+                                                            ><button class="ui primary button">Cập nhật</button></span
+                                                        >
+                                                    </li>
+                                                    <div class="ui divider"></div>
+                                                    <li>
+                                                        <span class="tcyclone-label">Từ ngày:</span
+                                                        ><span class="value">01/01/2024 -> 01/01/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đến ngày:</span
+                                                        ><span class="value">31/12/2024 -> 31/12/2024</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Đơn vị quản lý:</span
+                                                        ><span class="value">Công ty ABC -> Công ty ABC</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Tròn -> Tròn</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách km0:</span
+                                                        ><span class="value">100m -> 100m</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Khoảng cách mép đường:</span
+                                                        ><span class="value">50cm -> 50cm</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Vị trí:</span
+                                                        ><span class="value">Hà Nội -> Hà Nội</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Loại hố ga:</span
+                                                        ><span class="value">Vuông -> Vuông</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Kích thước:</span
+                                                        ><span class="value">60x60 -> 60x60</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="tcyclone-label">Lý trình:</span
+                                                        ><span class="value">Km5+600 -> Km5+600</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tcyclone-message-footer">
+                            <div class="tcyclone-d-flex">
+                                <div class="tcyclone-w-50 tcyclone-text-left"></div>
+                                <div class="tcyclone-w-50 tcyclone-text-right">
+                                    <!-- <button class="ui orange button">Cập nhật toàn bộ</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row tcyclone-footer">
+                <div class="sixteen wide column">
+                    <p class="tcyclone-copy">
+                        <a target="_blank" href="/">© Copyright 2025 TCyclone. All rights reserved.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="tcyclone-notification">
+            <p class="tcyclone-notification-message">You have a new message!</p>
+            <span class="tcyclone-close-button">&times;</span>
+        </div>
+        <div class="tcyclone-modal-update ui modal small">
+            <div class="header">Cập nhật</div>
+            <div class="content"></div>
+            <div class="actions">
+                <div class="ui red deny button">Hủy</div>
+                <div class="tcyclone-modal-submit ui green button">Lưu</div>
+            </div>
+        </div>
+
+        <div class="tcyclone-modal-create ui modal large">
+            <div class="header">Thêm mới hố ga</div>
+            <div class="content"></div>
+            <div class="actions">
+                <div class="ui red deny button">Hủy</div>
+                <div class="tcyclone-modal-submit-create ui green button">Lưu</div>
+            </div>
+        </div>
+        <script src="/static/libs.js"></script>
+        <script src="/static/script.js"></script>
+        <script src="/static/loader.js"></script>
+    </body>
+</html>

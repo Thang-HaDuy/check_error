@@ -1,29 +1,34 @@
 {
-    "code": 200,
-    "msg": "OK",
-    "data": {
-        "total": 1,
-        "content": [
-            {
-                "id": 51304,
-                "name": "Hố ga - Km0+10 - Nước sạch",
-                "objectName": "Đại An (Giao Trần Phú - Số nhà 63)",
-                "length": "None",
-                "height": "None",
-                "objectType": "ROAD",
-                "objectTypeName": "Đường",
-                "position": "RIGHT",
-                "positionName": "Phải",
-                "distanceToKm0": 10.0,
-                "roadEdgeDistance": 0.2,
-                "statusId": 429,
-                "statusName": "Tốt",
-                "levelCrossingTypeName": "None",
-                "bridgeTypeName": "None",
-                "description": "1 x 1",
-                "organizationId": 8,
-                "startDate": "10/01/2020"
-            }
-        ]
-    }
+    "data": [
+        {
+            "id": 395,
+            "id_doanDuong": 892,
+            "tenDoanDuong": "Tản Lĩnh -Yên Bài",
+            "lyTrinh": "Km8+220-:-Km8+260",
+            "lyTrinh_khoangCach": 8220,
+            "khoangCachMepDuong": -1.5,
+            "chieuDai": 40,
+            "id_viTri": 2,
+            "tenViTri": "Phải",
+            "ghiChu": "null",
+            "id_ke_log": 396,
+            "id_loaiKe": 5,
+            "tenLoaiKe": "Kè đá hộc",
+            "noiDung": "null",
+            "id_tinhTrang": 33,
+            "tenTinhTrang": "Bình thường",
+            "id_donViQuanLy": 29,
+            "tenDonViQuanLy": "Đội QLGT số 2",
+            "id_tuyenDuong": 839,
+            "namApDung": 2024,
+            "quyApDung": 1,
+            "namKetThuc": "null",
+            "quyKetThuc": "null",
+            "ngayApDung": "2024-01-01T00:00:00.000Z",
+            "ngayKetThuc": "null",
+            "is_suaChua": { "type": "Buffer", "data": [0] },
+            "ngayApDung_quaTrinh": "null"
+        }
+    ],
+    "message": "successfully!"
 }
