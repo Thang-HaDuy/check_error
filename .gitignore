@@ -1,0 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cấu hình môi trường ảo
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+*.env.*
+
+# File log và temp
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Biên dịch từ Cython
+*.c
+*.so
+
+# VSCode settings
+.vscode/
+
+# mypy, pyright
+.mypy_cache/
+.pyright/
+
+# pytest
+.cache/
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+.coverage
+coverage.*
+
+# Thư viện tải về
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+sdist/
+wheels/
+pip-wheel-metadata/
+*.manifest
+*.spec
+
+# Thư mục node_modules nếu có dùng frontend (với FastAPI + React chẳng hạn)
+node_modules/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Tệp SQLite hoặc file DB tạm
+*.sqlite3
+*.db
+*.sqlite
+
+# __pypackages__ theo PEP 582
+__pypackages__/
+
+# IDE (PyCharm, JetBrains, etc.)
+.idea/
+
+# macOS và hệ điều hành khác
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+*.pid.lock
+
+# Uvicorn log (nếu cấu hình ghi log)
+*.uvicorn.log
+

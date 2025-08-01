@@ -1,0 +1,195 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    margin: 0;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+.tcyclone-notification {
+    position: fixed; /* Or absolute, depending on desired positioning */
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50; /* Green background for success */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* For aligning message and close button */
+    align-items: center;
+    justify-content: space-between;
+}
+.tcyclone-notification-message {
+    margin: 0;
+}
+.tcyclone-close-button {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tcyclone-close-button:hover {
+    color: black;
+}
+
+.ui.dropdown > .label {
+    white-space: nowrap !important; /* Không cho xuống dòng */
+    overflow: hidden !important; /* Ẩn phần tràn */
+    text-overflow: ellipsis !important; /* Hiện dấu "..." khi quá dài */
+    display: block; /* Bắt buộc để text-overflow hoạt động */
+    max-width: 100%; /* Đảm bảo không vượt giới hạn container */
+}
+
+.ui.grid.full-height {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.tcyclone-message-gird,
+.tcyclone-message {
+    height: 100%;
+}
+.tcyclone-message-error {
+    padding: 0 50px;
+}
+
+.tcyclone-message-error-Noti {
+    /* width: 100%;
+    display: block;
+    text-align: center; */
+}
+
+.tcyclone-verified-info {
+    padding: 20px 0;
+    flex: 1;
+}
+
+.tcyclone-info-list li {
+    display: grid;
+    grid-template-columns: 195px 1fr; /* Cột trái cố định, cột phải tự dãn */
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.tcyclone-modal-create .tcyclone-info-list li {
+    grid-template-columns: 165px 1fr !important;
+}
+
+.tcyclone-title {
+    font-weight: bold;
+    line-height: 36px;
+}
+.tcyclone-label {
+    font-weight: bold;
+    line-height: 26px;
+}
+.tcyclone-footer {
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
+}
+.tcyclone-copy {
+    text-align: center;
+}
+.tcyclone-copy a {
+    color: #78909c;
+    text-decoration: none;
+}
+
+.tcyclone-scrollbar {
+    overflow-y: auto;
+    max-height: 70vh;
+    min-height: 410px;
+}
+
+.error > span {
+    color: red;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.tcyclone-d-flex {
+    display: flex !important;
+}
+
+.tcyclone-align-items-center {
+    align-items: center !important;
+}
+.tcyclone-justify-content-center {
+    justify-content: center;
+}
+
+.tcyclone-flex-column {
+    flex-direction: column;
+}
+.tcyclone-flex-1 {
+    flex: 1;
+}
+.tcyclone-gap-5 {
+    gap: 5px;
+}
+
+.tcyclone-gap-10 {
+    gap: 10px;
+}
+
+.tcyclone-flex-wrap {
+    flex-wrap: wrap;
+}
+.tcyclone-w-50 {
+    width: 50%;
+}
+
+.tcyclone-w-25 {
+    width: 25%;
+}
+
+.tcyclone-w-100 {
+    width: 100%;
+}
+
+.tcyclone-h-100 {
+    height: 100%;
+}
+.tcyclone-p-5 {
+    padding: 5px;
+}
+.tcyclone-px-5 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.tcyclone-p-10 {
+    padding: 10px;
+}
+.tcyclone-ms-5 {
+    margin-left: 5px !important;
+}
+.tcyclone-text-center {
+    text-align: center;
+}
+
+.tcyclone-text-right {
+    text-align: right;
+}
+
+.tcyclone-text-left {
+    text-align: left;
+}
+
+.tcyclone-pointer {
+    cursor: pointer;
+}
