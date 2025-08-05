@@ -51,47 +51,56 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('click', '.tcyclone-btn-update', function () {
-    const id = $(this).data('id'); // Lấy giá trị data-id
-    // let html = AddContentModalUpdate();
-    let html = ManholeTypeHandler[getType()].addContentModalUpdate();
-    $('.tcyclone-modal-update').find('.content').html(html);
-    $.ajax({
-        url: `/manhole/get-manhole-detal-v3`,
-        data: {
-            id: id,
-            key: getType(),
-        },
-        method: 'GET',
-        dataType: 'json',
-    })
-        .done(function (data) {
-            ManholeTypeHandler[getType()].addDataModalUpdate(data);
-            $('.tcyclone-modal-update').modal('show');
+$(document).ready(function () {
+    let debounceTimer;
+    $(document).on('click', '.tcyclone-btn-update', function () {
+        const id = $(this).data('id'); // Lấy giá trị data-id
+        // let html = AddContentModalUpdate();
+        let html = ManholeTypeHandler[getType()].addContentModalUpdate();
+        $('.tcyclone-modal-update').find('.content').html(html);
+        $.ajax({
+            url: `/manhole/get-manhole-detal-v3`,
+            data: {
+                id: id,
+                key: getType(),
+            },
+            method: 'GET',
+            dataType: 'json',
         })
-        .fail(function (xhr, status, error) {
-            alert('Lỗi server!');
-        });
+            .done(function (data) {
+                ManholeTypeHandler[getType()].addDataModalUpdate(data);
+                AddDropdownOnShow('.tcyclone-modal-object-name', debounceTimer);
+                $('.tcyclone-modal-update').modal('show');
+            })
+            .fail(function (xhr, status, error) {
+                alert('Lỗi server!');
+            });
+    });
 });
 
-$(document).on('click', '.tcyclone-btn-create', function () {
-    let html = ManholeTypeHandler[getType()].addContentFormCreate();
+$(document).ready(function () {
+    let debounceTimer;
 
-    $('.tcyclone-modal-create').find('.content').html(html);
-    const dataDiv = $(this)
-        .closest('.tcyclone-verified-info-content-row')
-        .find('.tcyclone-verified-info-content-row-data')
-        .clone();
-    $('.tcyclone-modal-create-data').html(dataDiv);
+    $(document).on('click', '.tcyclone-btn-create', function () {
+        let html = ManholeTypeHandler[getType()].addContentFormCreate();
 
-    GetDataSearchV3('', function (menuHtml) {
-        const dropdown = $('.tcyclone-modal-object-name-create');
-        const menu = dropdown.find('.menu');
-        menu.empty().append(menuHtml);
-        dropdown.dropdown('refresh');
+        $('.tcyclone-modal-create').find('.content').html(html);
+        const dataDiv = $(this)
+            .closest('.tcyclone-verified-info-content-row')
+            .find('.tcyclone-verified-info-content-row-data')
+            .clone();
+        $('.tcyclone-modal-create-data').html(dataDiv);
+
+        GetDataSearchV3('', function (menuHtml) {
+            const dropdown = $('.tcyclone-modal-object-name-create');
+            const menu = dropdown.find('.menu');
+            menu.empty().append(menuHtml);
+            dropdown.dropdown('refresh');
+        });
+        AddDropdownOnShow('.tcyclone-modal-object-name-create', debounceTimer);
+        $('.tcyclone-modal-object-create').dropdown('set selected', 'ROAD');
+        $('.tcyclone-modal-create').modal('show');
     });
-    $('.tcyclone-modal-object-create').dropdown('set selected', 'ROAD');
-    $('.tcyclone-modal-create').modal('show');
 });
 
 $(document).on('click', '.tcyclone-modal-submit-create', function () {
@@ -117,23 +126,11 @@ $(document).on('click', '.tcyclone-modal-submit-create', function () {
     });
 });
 
-$(document).ready(function () {
-    let debounceTimer;
-
-    $('.tcyclone-modal-object-name-create').dropdown({
-        onShow: function () {
-            const dropdown = $(this);
-            const input = dropdown.find('input.search');
-
-            AddMenuSearch(input, '.tcyclone-modal-object-name-create', debounceTimer);
-        },
-    });
-});
-
 $(document).on('click', '.tcyclone-modal-submit', function () {
     const container = $('.tcyclone-verified-info-content');
     const scrollTopBefore = container.scrollTop();
     let payload = ManholeTypeHandler[getType()].getDataUpdate();
+    console.log(payload);
     $.ajax({
         type: 'POST', // Specifies the request method
         url: `/manhole/update-manhole-v3?key=${getType()}`, // The URL to send the request to

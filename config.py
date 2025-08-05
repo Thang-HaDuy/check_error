@@ -2,12 +2,15 @@ import os
 import sys
 
 
-def get_base_dir():
-    if getattr(sys, 'frozen', False):
-        # Đang chạy từ file .exe đã build
-        return os.path.dirname(sys.executable)
+def resource_path(relative_path):
+    """Trả về đường dẫn tuyệt đối đến file resource.
+       Dùng được cả khi chạy từ source (.py) lẫn file .exe đóng gói bằng PyInstaller.
+    """
+    if hasattr(sys, '_MEIPASS'):
+        # Khi chạy file .exe của PyInstaller
+        base_path = sys._MEIPASS
     else:
-        # Đang chạy từ mã nguồn Python
-        return os.path.dirname(os.path.abspath(__file__))
+        # Khi chạy script .py
+        base_path = os.path.abspath(".")
 
-BASE_DIR = get_base_dir()
+    return os.path.join(base_path, relative_path)

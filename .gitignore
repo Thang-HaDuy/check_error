@@ -46,6 +46,8 @@ coverage.*
 *.egg
 *.egg-info/
 dist/
+dist.*
+*.zip
 build/
 eggs/
 parts/

@@ -2,10 +2,10 @@ import json
 import os
 from pathlib import Path
 
-from config import BASE_DIR
+from config import resource_path
 
 # Đường dẫn tới file JSON
-KEY_FILE = Path(os.path.join(BASE_DIR, "api_keys.json"))
+KEY_FILE = Path(resource_path("api_keys.json"))
 def load_keys():
     if not KEY_FILE.exists():
         return {}

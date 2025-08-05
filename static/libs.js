@@ -58,6 +58,7 @@ function loadManholeList(scrollRestore = null) {
         },
         success: function (data) {
             $('.tcyclone-total-manhole').html(`Tổng số lượng: ${data.length}`);
+            console.log(data);
             let html = ManholeTypeHandler[getType()].render(data);
             root.html(html);
             // restore scroll nếu có
@@ -95,6 +96,34 @@ function AddMenuSearch(input, classname, debounceTimer) {
     });
 }
 
+function AddDropdownOnShow(classname, debounceTimer) {
+    $(classname).dropdown({
+        onShow: function () {
+            const dropdown = $(this);
+            const input = dropdown.find('input.search');
+
+            input.off('input.myCustomSearch').on('input.myCustomSearch', function () {
+                const keyword = $(this).val();
+
+                clearTimeout(debounceTimer);
+
+                debounceTimer = setTimeout(() => {
+                    // Gọi API gợi ý / tìm kiếm
+                    $.get(`/craw/craw-distance-v3?name=${keyword}`, function (data) {
+                        const $menu = $(`${classname} .menu`);
+                        $menu.empty(); // Xóa các item cũ
+
+                        data.forEach((item) => {
+                            $menu.append(`<div class="item" data-value="${item.id}">${item.object_name}</div>`);
+                        });
+
+                        $(`${classname}`).dropdown('refresh'); // Làm mới lại dropdown
+                    });
+                }, 400);
+            });
+        },
+    });
+}
 // function RenderManhole(data) {
 //     let html;
 //     if (getType() == '1') {

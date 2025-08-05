@@ -1,8 +1,8 @@
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
-from src.schema.manhole import Manhole, ManholeCreate
+from src.schema.manhole import BodyData11, ExitRamp, Manhole, ManholeCreate
 from src.service.key import get_key
 from datetime import datetime
 import aiohttp
@@ -21,7 +21,6 @@ async def craw_manhole(v1, v3, key):
 
     return merged
 
-from collections import defaultdict
 
 def group_by_distance_position_and_edge(v1_data, v3_data):
     groups = defaultdict(dict)
@@ -42,25 +41,37 @@ def group_by_distance_position_and_edge(v1_data, v3_data):
     )
 
 
-
 async def craw_manhole_v1(id: int, key: str) -> List[dict]:
     x_access_token = get_key("key_v1")
     url = data_handlers[key]["urls"]["v1"]
     headers = {
-        "x-access-permission": '{"code":"QLDB_HoGa","action":"_view"}',
+        "x-access-permission": data_handlers[key]["x_access_permission"],
         "x-access-token": x_access_token,
         "Content-Type": "application/json"
     }
     payload = data_handlers[key]["craw_payload"](id)
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=payload, headers=headers) as response:
-            response.raise_for_status()
-            data = await response.json()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers) as response:
+                print(f"Status: {response.status}")
+                text = await response.text()
 
-    print(data)
-    return data_handlers[key]["parse_list"](data)
+                if response.status >= 400:
+                    print(f"Error response text: {text}")
+                    response.raise_for_status()
 
+                data = await response.json()
+    except aiohttp.ClientResponseError as e:
+        print(f"Client response error: {e.status} - {e.message}")
+    except aiohttp.ClientError as e:
+        print(f"Aiohttp client error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    else:
+        return data_handlers[key]["parse_list"](data)
+
+    return []
 
 async def craw_manhole_detal_v3(id: int, key: str) -> List[dict]:
     try:
@@ -71,10 +82,14 @@ async def craw_manhole_detal_v3(id: int, key: str) -> List[dict]:
             async with session.get(url, headers={"authorization": authorization}) as response:
                 response.raise_for_status()
                 data = await response.json()
-                print(data)
+    except aiohttp.ClientResponseError as e:
+        print(f"Client response error: {e.status} - {e.message}")
+    except aiohttp.ClientError as e:
+        print(f"Aiohttp client error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    else:
         return data_handlers[key]["parse_detail"](data)
-    except Exception as ex:
-        print(ex)
 
 semaphore = asyncio.Semaphore(50)  # điều chỉnh số lượng request đồng thời
 
@@ -113,26 +128,31 @@ async def get_manhole_details(manhole_object_ids: List[str], key: str):
 
     detail_urls = [f"{data_handlers[key]["urls"]["detail"]}{mid}" for mid in all_ids]
     detail_results = await fetch_all(detail_urls, fetch)
-
+    # print(detail_results)
     return [
         data_handlers[key]["format_detail"](m)
         for m in detail_results
         if isinstance(m, dict) and "data" in m
     ]
 
-async def put_manhole_v3(manhole: Union[Manhole], key: str) -> List[dict]:
+async def put_manhole_v3(manhole: Any, key: str):
     try:
         url = data_handlers[key]["urls"]["change"]
         authorization = get_key("key_v3")
         payload = data_handlers[key]["build_put_payload"](manhole)
-
+        print(payload)
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers={"authorization": authorization}) as response:
                 response.raise_for_status()
-                return await response.json()
-            
+                data = await response.json()
+    except aiohttp.ClientResponseError as e:
+        print(f"Client response error: {e.status} - {e}")
+    except aiohttp.ClientError as e:
+        print(f"Aiohttp client error: {e}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Unexpected error: {e}")
+    else:
+        return data  
     
 async def post_manhole_v3(manhole: Union[ManholeCreate], key: str) -> List[dict]:
     try:
@@ -144,11 +164,35 @@ async def post_manhole_v3(manhole: Union[ManholeCreate], key: str) -> List[dict]
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers={"authorization": authorization}) as response:
                 response.raise_for_status()
-                return await response.json()
-            
+                data = await response.json()
+    except aiohttp.ClientResponseError as e:
+        print(f"Client response error: {e.status} - {e.message}")
+    except aiohttp.ClientError as e:
+        print(f"Aiohttp client error: {e}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Unexpected error: {e}")
+    else:
+        return data  
 
+
+
+# async def craw_manhole_v1(id: int, key: str) -> List[dict]:
+#     x_access_token = get_key("key_v1")
+#     url = data_handlers[key]["urls"]["v1"]
+#     x_access_permission = data_handlers[key]["x_access_permission"]
+#     headers = {
+#         "x-access-permission": x_access_permission,
+#         "x-access-token": x_access_token,
+#     }
+#     payload = data_handlers[key]["craw_payload"](id)
+
+#     async with aiohttp.ClientSession() as session:
+#         async with session.post(url, json=payload, headers=headers) as response:
+#             response.raise_for_status()
+#             data = await response.json()
+
+#     print(payload)
+#     return data_handlers[key]["parse_list"](data)
 # def parse_manhole_detal(data: dict, key: str):
 #     if key == "1":
 #         return {
