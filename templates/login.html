@@ -11,6 +11,8 @@
         <script src="/static/lib/semantic.min.js"></script>
         <script src="/static/lib/flatpickr.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/static/lib/sweetalert2.css" />
+        <script src="/static/lib/sweetalert2.min.js"></script>
         <style>
             .ui {
                 font-family: 'Roboto', sans-serif !important;
@@ -20,8 +22,25 @@
     <body>
         <div
             class="ui container tcyclone-h-100 tcyclone-d-flex tcyclone-align-items-center tcyclone-justify-content-center"
+            style="gap: 16px"
         >
-            <div class="ui segment tcyclone-w-50">
+            <div class="ui segment tcyclone-w-40 tcyclone-m-0">
+                <h3 class="ui header">login v1</h3>
+                <div class="ui form">
+                    <div class="field">
+                        <label>Tài khoản</label>
+                        <input type="text" class="tcyclone-login-username-v1" placeholder="Username..." />
+                    </div>
+                    <div class="field">
+                        <label>Mật khẩu</label>
+                        <input type="password" class="tcyclone-login-password-v1" placeholder="Password..." />
+                    </div>
+                    <button class="ui button tcyclone-login-btn-v1 primary">Đăng nhập</button>
+                </div>
+            </div>
+
+            <div class="ui segment tcyclone-w-40 tcyclone-m-0">
+                <h3 class="ui header">login v3</h3>
                 <div class="ui form">
                     <div class="field">
                         <label>Tài khoản</label>
@@ -35,6 +54,7 @@
                 </div>
             </div>
         </div>
+        <a href="/home" class="ui button">Bắt đầu</a>
         <script src="/static/libs.js"></script>
         <script src="/static/script.js"></script>
     </body>

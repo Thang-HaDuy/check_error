@@ -27,9 +27,30 @@ function CheckErrorObject(name, distance_0km) {
     return min === 0 ? distance_0km <= max : distance_0km > min && distance_0km <= max;
 }
 
+function UseFlatPickr() {
+    flatpickr('.tcyclone-modal-end-date', {
+        dateFormat: 'd/m/Y',
+        allowInput: true,
+    });
+    flatpickr('.tcyclone-modal-start-date', {
+        dateFormat: 'd/m/Y',
+        allowInput: true,
+    });
+}
+
 function GetDataSearchV3(query, callback) {
     $.get(`/craw/craw-distance-v3?name=${encodeURIComponent(query)}`, function (res) {
         const html = res.map((item) => `<div class="item" data-value="${item.id}">${item.object_name}</div>`).join('');
+        callback(html);
+    }).fail(function (err) {
+        console.error('Lỗi lấy dữ liệu dropdown:', err);
+        callback('');
+    });
+}
+
+function GetCategory(cate, callback) {
+    $.get(`/category/get-category?cate=${cate}`, function (res) {
+        const html = res.map((item) => `<div class="item" data-value="${item.id}">${item.name}</div>`).join('');
         callback(html);
     }).fail(function (err) {
         console.error('Lỗi lấy dữ liệu dropdown:', err);

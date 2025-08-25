@@ -6,7 +6,12 @@ $(document).ready(function () {
                 `<div class="item" data-value="${item.id}">${item.name}</div>`,
             );
         });
-        alert('Đã sẵn sàng tìm kiếm!');
+        Swal.fire({
+            title: 'Sẵn sàng!',
+            text: 'Bắt đầu tìm kiếm nào!',
+            icon: 'success',
+            confirmButtonText: 'Đã hiểu',
+        });
     });
 });
 

@@ -94,22 +94,41 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
-            const value = data.name_object_id ?? 1;
-            const text = data.object_name ?? '';
+            const textSearch = data.object_name ?? '';
 
-            GetDataSearchV3(text.split('(')[0], function (menuHtml) {
+            GetDataSearchV3(textSearch.split('(')[0], function (menuHtml) {
+                const value = data.name_object_id ?? 1;
                 const dropdown = $('.tcyclone-modal-object-name');
+                dropdown.dropdown();
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
                 dropdown.dropdown('set selected', value);
             });
+
+            GetCategory('manhole-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                dropdown.dropdown();
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('manhole-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
             $('.tcyclone-modal-object').dropdown('set selected', 'ROAD');
             $('.tcyclone-modal-end-date').val(data.to_date ? data.to_date : '');
             $('.tcyclone-modal-start-date').val(data.form_date ? data.form_date : '');
@@ -235,12 +254,6 @@ const ManholeTypeHandler = {
                                         <i class="dropdown icon"></i>
                                         <div class="default text">Loại hố</div>
                                         <div class="menu">
-                                            <div class="item" data-value="380">Bưu điện</div>
-                                            <div class="item" data-value="379">Cứu hỏa</div>
-                                            <div class="item" data-value="378">Nước sạch</div>
-                                            <div class="item" data-value="377">Điện lực</div>
-                                            <div class="item" data-value="376">Viễn thông</div>
-                                            <div class="item" data-value="375">Thoát nước</div>
                                         </div>
                                     </div>
                                 </div>
@@ -267,18 +280,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">V3</div>
                                     <div class="menu">
-                                        <div class="item" data-value="433">Lún</div>
-                                        <div class="item" data-value="432">Hư hỏng</div>
-                                        <div class="item" data-value="431">mất nắp</div>
-                                        <div class="item" data-value="430">Mất</div>
-                                        <div class="item" data-value="429">Tốt</div>
-                                        <div class="item" data-value="428">Cũ, hỏng</div>
-                                        <div class="item" data-value="427">Gãy hỏng</div>
-                                        <div class="item" data-value="426">Han gỉ</div>
-                                        <div class="item" data-value="425">Cũ</div>
-                                        <div class="item" data-value="424">hỏng</div>
-                                        <div class="item" data-value="423">Bình thường</div>
-                                        <div class="item" data-value="422">Không có khung+nắp</div>
                                     </div>
                                 </div>
                             </div>
@@ -440,12 +441,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">Loại hố</div>
                                     <div class="menu">
-                                        <div class="item" data-value="380">Bưu điện</div>
-                                        <div class="item" data-value="379">Cứu hỏa</div>
-                                        <div class="item" data-value="378">Nước sạch</div>
-                                        <div class="item" data-value="377">Điện lực</div>
-                                        <div class="item" data-value="376">Viễn thông</div>
-                                        <div class="item" data-value="375">Thoát nước</div>
                                     </div>
                                 </div>
                             </div>
@@ -472,18 +467,6 @@ const ManholeTypeHandler = {
                                 <i class="dropdown icon"></i>
                                 <div class="default text">V3</div>
                                 <div class="menu">
-                                    <div class="item" data-value="433">Lún</div>
-                                    <div class="item" data-value="432">Hư hỏng</div>
-                                    <div class="item" data-value="431">mất nắp</div>
-                                    <div class="item" data-value="430">Mất</div>
-                                    <div class="item" data-value="429">Tốt</div>
-                                    <div class="item" data-value="428">Cũ, hỏng</div>
-                                    <div class="item" data-value="427">Gãy hỏng</div>
-                                    <div class="item" data-value="426">Han gỉ</div>
-                                    <div class="item" data-value="425">Cũ</div>
-                                    <div class="item" data-value="424">hỏng</div>
-                                    <div class="item" data-value="423">Bình thường</div>
-                                    <div class="item" data-value="422">Không có khung+nắp</div>
                                 </div>
                             </div>
                         </div>
@@ -647,9 +630,7 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -658,6 +639,22 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('embankment-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('embankment-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -981,12 +978,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">Loại kè</div>
                                     <div class="menu">
-                                        <div class="item" data-value="171">Bê tông cốt thép</div>
-                                        <div class="item" data-value="172">Kè đá hộc</div>
-                                        <div class="item" data-value="323">Bê tông xi măng</div>
-                                        <div class="item" data-value="324">Gạch xây</div>
-                                        <div class="item" data-value="325">Đá xây</div>
-                                        <div class="item" data-value="326">Ốp mái đá hộc</div>
                                     </div>
                                 </div>
                             </div>
@@ -1176,11 +1167,10 @@ const ManholeTypeHandler = {
         },
 
         addDataModalUpdate: function (data) {
+            console.log(data);
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -1189,6 +1179,23 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('guard-rail-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('guardrail-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -1318,14 +1325,6 @@ const ManholeTypeHandler = {
                                         <i class="dropdown icon"></i>
                                         <div class="default text">Loại kè</div>
                                         <div class="menu">
-                                            <div class="item" data-value="333">Tôn lượn sóng</div>
-                                            <div class="item" data-value="334">Hàng rào sắt</div>
-                                            <div class="item" data-value="335">Bê tông xi măng</div>
-                                            <div class="item" data-value="336">Tôn mạ kẽm</div>
-                                            <div class="item" data-value="337">Xây gạch</div>
-                                            <div class="item" data-value="338">Đá hộc</div>
-                                            <div class="item" data-value="339">Hàng rào lưới thép</div>
-                                            <div class="item" data-value="340">Hàng rào xoắn</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1352,7 +1351,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">V3</div>
                                     <div class="menu">
-                                        <div class="item" data-value="439">Bình thường</div>
                                     </div>
                                 </div>
                             </div>
@@ -1711,8 +1709,6 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -1721,6 +1717,23 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('hpile-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('H-pile-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -2047,9 +2060,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">Loại cọc H</div>
                                     <div class="menu">
-                                        <div class="item" data-value="316">Cột H sơn trên vỉa</div>
-                                        <div class="item" data-value="314">Cột BT</div>
-                                        <div class="item" data-value="315">Tấm thép</div>
                                     </div>
                                 </div>
                             </div>
@@ -2063,12 +2073,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">V3</div>
                                     <div class="menu">
-                                        <div class="item" data-value="411">Bình thường</div>
-                                        <div class="item" data-value="412">Đổ gãy</div>
-                                        <div class="item" data-value="413">Mất</div>
-                                        <div class="item" data-value="414">Bàn Giao CTNC</div>
-                                        <div class="item" data-value="415">Han rỉ, mờ sơn</div>
-                                        <div class="item" data-value="416">Bẩn, mờ sơn</div>
                                     </div>
                                 </div>
                             </div>
@@ -2233,9 +2237,7 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -2244,6 +2246,23 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('km-column-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('kilometer-marker-post-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -2401,12 +2420,6 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">V3</div>
                                     <div class="menu">
-                                        <div class="item" data-value="405">Đổ gãy</div>
-                                        <div class="item" data-value="406">Mất</div>
-                                        <div class="item" data-value="407">Bẩn, mờ sơn</div>
-                                        <div class="item" data-value="408">Bàn giao CTNC</div>
-                                        <div class="item" data-value="409">Bình thường</div>
-                                        <div class="item" data-value="410">Bàn Giao CTNC</div>
                                     </div>
                                 </div>
                             </div>
@@ -2568,19 +2581,18 @@ const ManholeTypeHandler = {
                                     <i class="dropdown icon"></i>
                                     <div class="default text">Loại cột km</div>
                                     <div class="menu">
-                                        <div class="item" data-value="150">BTCT+Bọc tôn</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="field tcyclone-w-50">
                             <div class="tcyclone-px-5">
-                                <label>Kích thước</label>
+                                <label>Nội dung</label>
                                 <div class="ui input mini">
                                     <input
                                         type="text"
                                         class="tcyclone-modal-input tcyclone-modal-size"
-                                        placeholder="Kích thước..."
+                                        placeholder="Nội dung..."
                                     />
                                 </div>
                             </div>
@@ -2595,12 +2607,6 @@ const ManholeTypeHandler = {
                                 <i class="dropdown icon"></i>
                                 <div class="default text">V3</div>
                                 <div class="menu">
-                                    <div class="item" data-value="405">Đổ gãy</div>
-                                    <div class="item" data-value="406">Mất</div>
-                                    <div class="item" data-value="407">Bẩn, mờ sơn</div>
-                                    <div class="item" data-value="408">Bàn giao CTNC</div>
-                                    <div class="item" data-value="409">Bình thường</div>
-                                    <div class="item" data-value="410">Bàn Giao CTNC</div>
                                 </div>
                             </div>
                         </div>
@@ -2760,7 +2766,6 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
             $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
@@ -2771,6 +2776,15 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('auxiliary-common-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -3257,7 +3271,6 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-angle').val(data.angle ?? '');
@@ -3269,6 +3282,15 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('exit-ramp-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -3627,7 +3649,7 @@ const ManholeTypeHandler = {
                                 <i class="dropdown icon"></i>
                                 <div class="default text">V3</div>
                                 <div class="menu">
-                                    <div class="item" data-value="440">Trung bình</div>
+                                    <div class="item" data-value="440">Bình thường</div>
                                     <div class="item" data-value="441">Xấu</div>
                                 </div>
                             </div>
@@ -3797,11 +3819,11 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
-            $('.tcyclone-modal-culvert-aperture').dropdown('set selected', data.culvert_aperture ?? 433);
+            // $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
+            // $('.tcyclone-modal-culvert-aperture').dropdown('set selected', data.culvert_aperture ?? 433);
             $('.tcyclone-modal-direction-type').dropdown('set selected', data.direction_type ?? 433);
             $('.tcyclone-modal-size').val(data.size ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
+            // $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -3810,6 +3832,31 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('culvert-span-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-culvert-aperture');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('culvert-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('culvert-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -4366,10 +4413,10 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
+            // $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-size').val(data.length ?? '');
             $('.tcyclone-modal-width').val(data.width ?? '');
-            $('.tcyclone-modal-type').dropdown('set selected', data.type_id ?? 380);
+            // $('.tcyclone-modal-type').dropdown('set selected', data.type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -4378,6 +4425,24 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('drainage-ditch-type', function (menuHtml) {
+                const value = data.type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-type');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('water-channels-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');
@@ -4907,10 +4972,10 @@ const ManholeTypeHandler = {
         addDataModalUpdate: function (data) {
             $('.tcyclone-modal-description').val(data.description ?? '');
             $('.tcyclone-modal-coordinates').val(data.coordinates ?? '');
-            $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
+            // $('.tcyclone-modal-status').dropdown('set selected', data.status_id ?? 433);
             $('.tcyclone-modal-length').val(data.length ?? '');
             $('.tcyclone-modal-width').val(data.width ?? '');
-            $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
+            // $('.tcyclone-modal-manhole-type').dropdown('set selected', data.manhole_type_id ?? 380);
             $('.tcyclone-modal-positon').dropdown('set selected', data.position ?? 'CENTER');
             $('.tcyclone-modal-road-edge-distance').val(data.road_edge_distance ?? '');
             $('.tcyclone-modal-distance-to-0km').val(data.distance_0km ?? '');
@@ -4919,6 +4984,23 @@ const ManholeTypeHandler = {
 
             GetDataSearchV3(text.split('(')[0], function (menuHtml) {
                 const dropdown = $('.tcyclone-modal-object-name');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+
+            GetCategory('traffic-cone-type', function (menuHtml) {
+                const value = data.manhole_type_id ?? 1;
+                const dropdown = $('.tcyclone-modal-manhole-type');
+                const menu = dropdown.find('.menu');
+                menu.empty().append(menuHtml);
+                dropdown.dropdown('refresh');
+                dropdown.dropdown('set selected', value);
+            });
+            GetCategory('traffic-cone-status', function (menuHtml) {
+                const value = data.status_id ?? 1;
+                const dropdown = $('.tcyclone-modal-status');
                 const menu = dropdown.find('.menu');
                 menu.empty().append(menuHtml);
                 dropdown.dropdown('refresh');

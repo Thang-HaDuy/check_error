@@ -157,7 +157,9 @@ body {
 .tcyclone-w-25 {
     width: 25%;
 }
-
+.tcyclone-w-40 {
+    width: 40%;
+}
 .tcyclone-w-100 {
     width: 100%;
 }
@@ -185,7 +187,9 @@ body {
 .tcyclone-text-right {
     text-align: right;
 }
-
+.tcyclone-m-0 {
+    margin: 0 !important;
+}
 .tcyclone-text-left {
     text-align: left;
 }

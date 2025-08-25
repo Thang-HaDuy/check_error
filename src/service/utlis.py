@@ -23,7 +23,4 @@ directionId8 = {
     "LONGITUDINAL": 'DOC',
 }
 
-culvertApertureId8 = {
-    "40": "0.5-2m",
-    "41": "10m"
-}
+culvertApertureId8 = {}

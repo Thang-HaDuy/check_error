@@ -71,7 +71,9 @@ async def craw_manhole_v1(id: int, key: str) -> List[dict]:
     else:
         return data_handlers[key]["parse_list"](data)
 
-    return []
+
+
+from src.service.utlis import culvertApertureId8
 
 async def craw_manhole_detal_v3(id: int, key: str) -> List[dict]:
     try:
@@ -128,32 +130,35 @@ async def get_manhole_details(manhole_object_ids: List[str], key: str):
 
     detail_urls = [f"{data_handlers[key]["urls"]["detail"]}{mid}" for mid in all_ids]
     detail_results = await fetch_all(detail_urls, fetch)
-    # print(detail_results)
     return [
         data_handlers[key]["format_detail"](m)
         for m in detail_results
         if isinstance(m, dict) and "data" in m
     ]
-
+  
 async def put_manhole_v3(manhole: Any, key: str):
-    try:
-        url = data_handlers[key]["urls"]["change"]
-        authorization = get_key("key_v3")
-        payload = data_handlers[key]["build_put_payload"](manhole)
-        print(payload)
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=payload, headers={"authorization": authorization}) as response:
-                response.raise_for_status()
+    url = data_handlers[key]["urls"]["change"]
+    authorization = get_key("key_v3")
+    payload = data_handlers[key]["build_put_payload"](manhole)
+    print(payload)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload, headers={"authorization": authorization}) as response:
+            # Luôn đọc JSON bất kể status là gì
+            print(response.status)
+            text = await response.text()
+            try:
                 data = await response.json()
-    except aiohttp.ClientResponseError as e:
-        print(f"Client response error: {e.status} - {e}")
-    except aiohttp.ClientError as e:
-        print(f"Aiohttp client error: {e}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-    else:
-        return data  
-    
+            except aiohttp.ContentTypeError:
+                # Trường hợp không phải JSON, in text
+                print(f"Response is not JSON: {text}")
+                raise
+
+            if response.status >= 300:
+                raise HTTPException(status_code=500, detail=data)
+            else:
+                return data
+
+
 async def post_manhole_v3(manhole: Union[ManholeCreate], key: str) -> List[dict]:
     try:
         url = data_handlers[key]["urls"]["change"]
@@ -175,6 +180,25 @@ async def post_manhole_v3(manhole: Union[ManholeCreate], key: str) -> List[dict]
         return data  
 
 
+# async def put_manhole_v3(manhole: Any, key: str):
+#     try:
+#         url = data_handlers[key]["urls"]["change"]
+#         authorization = get_key("key_v3")
+#         payload = data_handlers[key]["build_put_payload"](manhole)
+#         print(payload)
+#         async with aiohttp.ClientSession() as session:
+#             async with session.post(url, json=payload, headers={"authorization": authorization}) as response:
+#                 response.raise_for_status()
+#                 data = await response.json()
+#     except aiohttp.ClientResponseError as e:
+#         error_text = await response.text()
+#         print(f"Server error {response.status}: {error_text}")
+#     except aiohttp.ClientError as e:
+#         print(f"Aiohttp client error: {e}")
+#     except Exception as e:
+#         print(f"Unexpected error: {e}")
+#     else:
+#         return data
 
 # async def craw_manhole_v1(id: int, key: str) -> List[dict]:
 #     x_access_token = get_key("key_v1")

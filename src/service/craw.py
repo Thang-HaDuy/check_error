@@ -7,8 +7,10 @@ from src.service.key import get_key, update_key
 import requests
 import urllib.parse
 
+import requests
 
-async def craw_distance_v1():
+
+def craw_distance_v1():
     x_access_token = get_key("key_v1")
     url = "https://rbms-hn-api.giaothong247.vn/duongbo/doanduong/getbyname"
     
@@ -21,17 +23,17 @@ async def craw_distance_v1():
         "name": ""
     }
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=payload, headers=headers) as response:
-            response.raise_for_status()
-            json_data = await response.json()
+    response = requests.post(url,headers=headers, json=payload)
+    json_data = response.json()
 
-            return [
-                CrawDistance(
-                    id=c['id'],
-                    name=c['name']
-                ) for c in json_data["data"]
-            ]
+    print(json_data)
+    return [
+            {
+                "id": c['id'],
+                "name": c['name']
+            } for c in json_data["data"]
+        ]
+
 
 async def craw_distance_v3(name):
     authorization = get_key("key_v3")
@@ -71,5 +73,63 @@ async def login_v3(login: LoginSchema):
                 response.raise_for_status()
                 json_data = await response.json()
         update_key("key_v3", f"Bearer {json_data['data']['access_token']}")
+        return json_data['data']['access_token']
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+async def login_v1(login: LoginSchema):
+    url = "https://rbms-hn-api.giaothong247.vn/auth/token"
+    
+    payload = {
+        "username": login.username,
+        "password": login.password,
+    }
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload) as response:
+                response.raise_for_status()
+                json_data = await response.json()
+        update_key("key_v1", json_data['token'])
+        return json_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# def craw_distance_v1():
+#     x_access_token = get_key("key_v1")
+#     url = "https://rbms-hn-api.giaothong247.vn/duongbo/doanduong/getbyname?name="
+    
+#     headers = {
+#         "x-access-permission": '{"code":"QLDB_CongTrinhDuongBo","action":"_view"}',
+#         "x-access-token": x_access_token
+#     }
+
+#     response = requests.post(url, headers=headers)
+    
+#     print("Status:", response.status_code)
+#     print("Response JSON:", response.json())
+
+# async def craw_distance_v1():
+#     x_access_token = get_key("key_v1")
+#     url = "https://rbms-hn-api.giaothong247.vn/duongbo/doanduong/getbyname"
+    
+#     headers = {
+#         "x-access-permission": '{"code":"QLDB_CongTrinhDuongBo","action":"_view"}',
+#         "x-access-token": x_access_token
+#     }
+
+#     payload = {
+#         "name": ""
+#     }
+    
+#     async with aiohttp.ClientSession() as session:
+#         async with session.post(url, json=payload, headers=headers) as response:
+#             response.raise_for_status()
+#             json_data = await response.json()
+
+#             return [
+#                 CrawDistance(
+#                     id=c['id'],
+#                     name=c['name']
+#                 ) for c in json_data["data"]
+#             ]

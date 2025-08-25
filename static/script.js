@@ -58,6 +58,7 @@ $(document).ready(function () {
         // let html = AddContentModalUpdate();
         let html = ManholeTypeHandler[getType()].addContentModalUpdate();
         $('.tcyclone-modal-update').find('.content').html(html);
+        UseFlatPickr();
         $.ajax({
             url: `/manhole/get-manhole-detal-v3`,
             data: {
@@ -100,6 +101,7 @@ $(document).ready(function () {
         AddDropdownOnShow('.tcyclone-modal-object-name-create', debounceTimer);
         $('.tcyclone-modal-object-create').dropdown('set selected', 'ROAD');
         $('.tcyclone-modal-create').modal('show');
+        UseFlatPickr();
     });
 });
 
@@ -141,11 +143,13 @@ $(document).on('click', '.tcyclone-modal-submit', function () {
             $('.tcyclone-modal-update').modal('hide');
         },
         error: function (xhr, status, error) {
-            if (xhr.status == 422) {
-                alert('Vui lòng đầy đủ thông tin');
-            } else if (xhr.status == 500) {
-                alert('Lỗi phía server!');
-            }
+            let mes = JSON.parse(xhr.responseText).detail.errorDetail;
+            Swal.fire({
+                title: 'Lỗi!',
+                text: mes,
+                icon: 'error',
+                confirmButtonText: 'Đã hiểu',
+            });
         },
     });
 });
@@ -169,7 +173,39 @@ $(document).ready(function () {
         },
     });
 });
-
+$(document).ready(function () {
+    $('.tcyclone-login-btn-v1').on('click', function () {
+        let payload = {
+            username: $('.tcyclone-login-username-v1').val(),
+            password: $('.tcyclone-login-password-v1').val(),
+        };
+        $.ajax({
+            type: 'POST', // Specifies the request method
+            url: '/loginv1', // The URL to send the request to
+            contentType: 'application/json', // << quan trọng
+            data: JSON.stringify(payload), // << convert object to JSON
+            success: function (response) {
+                console.log(response);
+                if (!response.token) {
+                    alert('Lỗi phía server!');
+                }
+                Swal.fire({
+                    title: 'Sẵn sàng!',
+                    text: 'Login thành công v1!',
+                    icon: 'success',
+                    confirmButtonText: 'Đã hiểu',
+                });
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status == 422) {
+                    alert('Vui lòng đầy đủ thông tin');
+                } else if (xhr.status == 500) {
+                    alert('Lỗi phía server!');
+                }
+            },
+        });
+    });
+});
 $(document).ready(function () {
     $('.tcyclone-login-btn').on('click', function () {
         let payload = {
@@ -182,7 +218,12 @@ $(document).ready(function () {
             contentType: 'application/json', // << quan trọng
             data: JSON.stringify(payload), // << convert object to JSON
             success: function (response) {
-                window.location.href = '/home';
+                Swal.fire({
+                    title: 'Sẵn sàng!',
+                    text: 'Login Thành Công v3!',
+                    icon: 'success',
+                    confirmButtonText: 'Đã hiểu',
+                });
             },
             error: function (xhr, status, error) {
                 if (xhr.status == 422) {

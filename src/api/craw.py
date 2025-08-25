@@ -6,10 +6,10 @@ from src.service.craw import craw_distance_v1, craw_distance_v3
 
 router = APIRouter()
 
-@router.get("/craw-distance-v1", response_model=List[CrawDistance])
+@router.get("/craw-distance-v1")
 async def craw_data_distance():
     try:
-        return await craw_distance_v1()
+        return craw_distance_v1()
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
